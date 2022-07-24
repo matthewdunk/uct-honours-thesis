@@ -1,0 +1,162 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mathmacros}[2022/06/04 v1.0 Collection of useful mathematics macros]
+
+\RequirePackage{mathtools}	% fonts and environments for mathematical formulae
+\RequirePackage{amsfonts}	% extra fonts
+\RequirePackage{amssymb}	% extra symbols
+\RequirePackage{amsthm}		% theorem-like environments
+\RequirePackage{thmtools}	% theorem-like environments, extends amsthm
+\RequirePackage{mathrsfs}	% script font with \mathscr{}
+\RequirePackage{dsfont}		% double stroke font with \mathds{}
+\RequirePackage{cancel}		% cancel terms with \cancel, \bcancel, or \xcancel
+\RequirePackage{stmaryrd}	% brackets
+\RequirePackage{bm}			% bold font with \bm{}
+\RequirePackage{fixmath}	% make maths comply with ISO 31-0:1992 to ISO 
+							% 31-13:1992
+
+
+
+% ********************************************************************
+% Commands
+% ********************************************************************
+%% 'Blackboard bold' symbols (for the sets N,Z,Q,R,C, etc) 
+\@tfor\next :=ABCDEFGHIJKLMNOPQRUSTUVWXYZ\do{%
+	\def\command@factory#1{%
+		\expandafter\def\csname #1\endcsname{\mathbb{#1}}
+	}
+	\expandafter\command@factory\next
+}
+
+%% Some extra macros for ease of use; these are non-standard!
+\newcommand{\GF}{$\mathrm{GF}$} % Galois field
+\newcommand{\rd}{\, \mathrm{d}} % Roman d for use in integrals: $\int f(x) \rd x$ 
+\renewcommand{\d}{\mathrm{d}}  % Roman d for use in derivatives: $\dfrac \d {\d x}$ *
+\newcommand{\rdelta}{\,\delta} % Delta operator for use in sums 
+\newcommand{\rD}{\mathrm{D}} % Differential operator D 
+
+%% Script letters (for sets, etc)
+\@tfor\next := ABCDEFGHIJKLMNOPQRSTUVWXYZ\do{%
+	\def\command@factory#1{%
+		\expandafter\def\csname #1#1\endcsname{\mathcal{#1}}
+	}
+	\expandafter\command@factory\next
+}
+
+%% Fraktur letters (for classes, etc)
+\@tfor\next := ABCDEFGHIJKLMNOPQRSTUVWXYZ\do{%
+	\def\command@factory#1{%
+		\expandafter\def\csname c#1\endcsname{\mathfrak{#1}}
+	}
+	\expandafter\command@factory\next
+}
+
+%% Otherwise undefined trigonometrical and hyperbolic functions
+\DeclareMathOperator{\cosec}{cosec}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\hav}{hav}
+\DeclareMathOperator{\vers}{vers}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\Ci}{Ci}
+\DeclareMathOperator{\Si}{Si}
+\DeclareMathOperator{\Li}{Li}
+\DeclareMathOperator{\Ei}{Ei}
+\DeclareMathOperator{\erf}{erf}
+\DeclareMathOperator{\erfc}{erfc}
+
+%% Bracketing constructs
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\sqbrk}[1]{\left[#1\right]}
+
+\newcommand{\set}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\cmod}[1]{\left\lvert #1 \right\rvert}
+\NewDocumentCommand\norm{g}{%
+	\ensuremath{\left\lVert
+		\IfNoValueTF{#1}{
+			\, \cdot \, 
+		}{#1}
+		\right\rVert
+	}
+}
+
+\newcommand{\closedint}[2]{\left[ #1, #2\right]}
+\newcommand{\openint}[2]{\left(#1, #2 \right)}
+\newcommand{\hointl}[2]{\left(#1, #2\right]}
+\newcommand{\hointr}[2]{\left[#1, #2\right)}
+\newcommand{\tuple}[1]{\left(#1\right)}
+\newcommand{\struct}[1]{\left(#1\right)}
+\newcommand{\ideal}[1]{\left(#1\right)}
+\newcommand{\sequence}[1]{\left( #1 \right)}
+\newcommand{\family}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\gen}[1]{\left\langle #1 \right\rangle}
+\newcommand{\eqclass}[2]{\left[\!\left[ #1 \right]\!\right]_{#2}}
+\renewcommand{\index}[2]{\left[ #1 : #2 \right]}
+\newcommand{\order}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\size}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\bigsize}[1]{\bigl\lvert #1 \bigr\rvert}
+\newcommand{\card}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\fractpart}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\map}[2]{#1 \left( #2 \right)}
+\newcommand{\bracket}[2]{{\left\langle #1 \, \middle \vert \, #2 \right\rangle}}
+\NewDocumentCommand\innerprod{g g}{%
+	\ensuremath{\left\langle
+		\IfNoValueTF{#2}{%
+			\IfNoValueTF{#1}{%
+				\cdot
+			}{
+				#1
+			}
+			, \cdot
+		}{ 
+			#1, #2
+		}
+		\right\rangle    
+	}
+}
+
+\newcommand{\Syl}[2]{\mathrm{Syl}_{#1} \left( #2 \right)}
+\newcommand{\relcomp}[2]{\complement_{#1} \left( #2 \right)}
+\newcommand{\laptrans}[1]{\LL \left\lbrace #1 \right\rbrace}
+\newcommand{\invlaptrans}[1]{\LL^{-1} \left\lbrace #1 \right\rbrace}
+\newcommand{\powerset}[1]{\PP \left( #1 \right)}
+
+%% Miscellaneous 
+\newcommand{\hcf}{\mathrm{hcf}}
+\newcommand{\inj}{\mathrm{inj}}
+\newcommand{\rem}{\mathrm{rem}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\proj}{\mathrm{proj}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\len}{\mathrm{len}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\grad}{\mathrm{grad}}
+\newcommand{\curl}{\mathrm{curl}}
+\newcommand{\dr}[1]{\mathrm{dr}\left( #1 \right)}
+\newcommand{\diam}[1]{\mathrm{diam}\left( #1 \right)}
+\newcommand{\cl}[1]{\mathrm{cl} \left( #1 \right)}
+\newcommand{\var}[1]{\mathsf{var} \left( #1 \right)}
+\newcommand{\cov}[1]{\mathsf{cov} \left( #1 \right)}
+\newcommand{\expect}[1]{\mathsf{E} \left( #1 \right)}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Ln}{Ln}
+\DeclareMathOperator{\On}{On}
+\DeclareMathOperator{\Area}{Area}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\Frob}{Frob}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\Bernoulli}[1]{\mathrm{Bern}\left( #1 \right)}
+\newcommand{\BetaDist}[1]{\mathrm{Beta}\left( #1 \right)}
+\newcommand{\Binomial}[2]{\mathrm{B}\left( #1, #2 \right)}
+\newcommand{\Cauchy}[2]{\mathrm{Cauchy}\left( #1, #2 \right)}
+\newcommand{\NegativeBinomial}[2]{\mathrm{NB}\left( #1, #2 \right)}
+\newcommand{\Exponential}[2]{\mathrm{Exp}\left( #1, #2 \right)}
+\newcommand{\Gaussian}[2]{N\left( #1, #2 \right)}
+\newcommand{\Geometric}[1]{\mathrm{G}_0 \left( #1 \right)}
+\newcommand{\ShiftedGeometric}[1]{\mathrm{G}_1 \left( #1 \right)}
+\newcommand{\Ber}{\mathrm{Ber}}
+\newcommand{\Bei}{\mathrm{Bei}}
+\newcommand{\Rad}{\mathrm{Rad}}
+\newcommand{\ot}{\mathrm{ot}}
