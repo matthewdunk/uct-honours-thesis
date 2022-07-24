@@ -1,0 +1,8 @@
+
+*.aux
+uctthesis-blx.bib
+*.log
+*.out
+*.xml
+*.gz
+*.toc
